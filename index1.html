@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntiqueAuction - Curated Heritage & Artifacts</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-chess-rook"></i> <span>AntiqueAuction</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#antiques">Catalog</a></li>
+                <li><a href="#valuation">Valuation</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+                <button id="authBtn" class="btn-primary-outline" onclick="openAuthModal()">Login / Register</button>
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Home Section -->
+    <section id="home" class="hero-section">
+        <div class="container hero-content">
+            <h1>Discover Timeless Treasures & Heritage Masterpieces</h1>
+            <p>Explore an expanded gallery of fine Victorian furniture, exquisite Georgian jewelry, rare illuminated manuscripts, and rare collectibles.</p>
+            <div class="hero-buttons">
+                <a href="#antiques" class="btn-primary">Explore Catalog</a>
+                <a href="#valuation" class="btn-secondary">Request Valuation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Highlights -->
+    <section class="categories-section container">
+        <div class="section-title">
+            <h2>Curated Collections</h2>
+            <p>Browse through exquisite categories preserved across centuries</p>
+        </div>
+        <div class="category-grid">
+            <div class="cat-card" onclick="filterByCategory('Furniture')">
+                <i class="fas fa-couch"></i>
+                <h3>Furniture & Decor</h3>
+                <p>Victorian Cabinets, Baroque Chairs, Antique Mirrors</p>
+            </div>
+            <div class="cat-card" onclick="filterByCategory('Art')">
+                <i class="fas fa-palette"></i>
+                <h3>Art & Paintings</h3>
+                <p>Old Masterpieces, Rococo Oils, Vintage Prints</p>
+            </div>
+            <div class="cat-card" onclick="filterByCategory('Jewelry')">
+                <i class="fas fa-gem"></i>
+                <h3>Jewelry & Timepieces</h3>
+                <p>Georgian Diamond Brooches, Gold Pocket Watches</p>
+            </div>
+            <div class="cat-card" onclick="filterByCategory('Manuscripts')">
+                <i class="fas fa-book-open"></i>
+                <h3>Rare Books & Manuscripts</h3>
+                <p>First Editions, Illuminated Folios, Antique Atlases</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Antiques Catalog & Listing Section -->
+    <section id="antiques" class="catalog-section container">
+        <div class="section-title">
+            <h2>Live Auction & Antique Catalog</h2>
+            <p>Filter by era, category, condition, or price to find your next heirloom</p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="filter-controls">
+            <input type="text" id="searchInput" placeholder="Search by name, origin..." oninput="applyFilters()">
+            <select id="categoryFilter" onchange="applyFilters()">
+                <option value="">All Categories</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Art">Art</option>
+                <option value="Jewelry">Jewelry</option>
+                <option value="Manuscripts">Manuscripts</option>
+            </select>
+            <select id="eraFilter" onchange="applyFilters()">
+                <option value="">All Eras</option>
+                <option value="Victorian (1837-1901)">Victorian (1837-1901)</option>
+                <option value="18th Century">18th Century</option>
+                <option value="Renaissance">Renaissance</option>
+                <option value="Art Deco">Art Deco</option>
+                <option value="Georgian Era (1714–1837)">Georgian Era (1714–1837)</option>
+            </select>
+            <button class="btn-secondary" onclick="resetFilters()">Reset Filters</button>
+            <button class="btn-primary" onclick="toggleVirtualGallery()"><i class="fas fa-vr-cardboard"></i> Virtual Gallery View</button>
+        </div>
+
+        <!-- Catalog Grid / Virtual Gallery View Container -->
+        <div id="catalogGrid" class="antique-grid">
+            <!-- Dynamically populated via script.js -->
+        </div>
+    </section>
+
+    <!-- Expert Valuation Section -->
+    <section id="valuation" class="valuation-section">
+        <div class="container valuation-container">
+            <div class="section-title">
+                <h2>Expert Valuation & Authentication</h2>
+                <p>Submit your heirloom details for simulated professional appraisal and authenticity checks.</p>
+            </div>
+            <form id="valuationForm" class="valuation-form" onsubmit="submitValuation(event)">
+                <div class="form-group">
+                    <label>Artifact Name</label>
+                    <input type="text" id="valName" required placeholder="e.g., 19th Century Bronze Clock">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="valCategory">
+                        <option value="Furniture">Furniture</option>
+                        <option value="Art">Art</option>
+                        <option value="Jewelry">Jewelry</option>
+                        <option value="Manuscripts">Manuscripts</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estimated Origin / Era</label>
+                    <input type="text" id="valOrigin" required placeholder="e.g., Florence, Italy / Renaissance">
+                </div>
+                <div class="form-group">
+                    <label>Condition Notes & History</label>
+                    <textarea id="valNotes" rows="3" required placeholder="Describe wear, hallmarks, or family heritage..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Request Expert Valuation</button>
+            </form>
+            <div id="valuationResult" class="valuation-result hidden"></div>
+        </div>
+    </section>
+
+    <!-- Collector & Seller Dashboard Section -->
+    <section id="dashboard" class="dashboard-section container">
+        <div class="section-title">
+            <h2>User Dashboards</h2>
+            <p>Manage your bids, watchlist, inventory, and export reports.</p>
+        </div>
+
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" onclick="switchTab('collector')">Collector Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('seller')">Seller Dashboard</button>
+        </div>
+
+        <!-- Collector Tab -->
+        <div id="collectorTab" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="dash-card">
+                    <h3><i class="fas fa-gavel"></i> My Bidding History</h3>
+                    <div id="myBidsList">No active bids placed yet.</div>
+                </div>
+                <div class="dash-card">
+                    <h3><i class="fas fa-heart"></i> Watchlist & Won Items</h3>
+                    <div id="watchlistList">Your watchlist is currently empty.</div>
+                </div>
+            </div>
+            <div class="export-actions">
+                <button class="btn-secondary" onclick="exportReport('CSV')"><i class="fas fa-file-csv"></i> Export CSV Report</button>
+                <button class="btn-secondary" onclick="exportReport('PDF')"><i class="fas fa-file-pdf"></i> Export PDF Summary</button>
+            </div>
+        </div>
+
+        <!-- Seller Tab -->
+        <div id="sellerTab" class="tab-content">
+            <div class="dash-card">
+                <h3><i class="fas fa-plus-circle"></i> List a New Antique for Auction</h3>
+                <form id="addAntiqueForm" onsubmit="addNewAntique(event)" class="inline-form">
+                    <input type="text" id="newTitle" placeholder="Antique Title" required>
+                    <select id="newCategory">
+                        <option value="Furniture">Furniture</option>
+                        <option value="Art">Art</option>
+                        <option value="Jewelry">Jewelry</option>
+                        <option value="Manuscripts">Manuscripts</option>
+                    </select>
+                    <input type="text" id="newEra" placeholder="Era (e.g., Victorian)" required>
+                    <input type="text" id="newOrigin" placeholder="Origin (e.g., England)" required>
+                    <input type="number" id="newPrice" placeholder="Starting Price ($)" required>
+                    <input type="text" id="newImage" placeholder="Image URL (optional)">
+                    <button type="submit" class="btn-primary">Publish Listing</button>
+                </form>
+            </div>
+            <div class="dash-card">
+                <h3><i class="fas fa-boxes"></i> My Listed Inventory & Sales Status</h3>
+                <div id="sellerInventoryList">No items listed by you yet.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us & Curator Recommendations -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>About AntiqueAuction & Curator Picks</h2>
+                <p>Preserving history with uncompromising integrity and expert authentication standards.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>Our Heritage & Mission</h3>
+                    <p>Founded by renowned historians and art curators, AntiqueAuction provides a secure, transparent, and sophisticated marketplace for rare artifacts. Every piece undergoes rigorous provenance tracing and material testing before receiving our official Certificate of Authenticity.</p>
+                </div>
+                <div class="curator-picks">
+                    <h3><i class="fas fa-award"></i> Curator's Recommendations</h3>
+                    <ul id="curatorList">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section container">
+        <div class="section-title">
+            <h2>Contact Our Appraisal Specialists</h2>
+            <p>Have questions regarding provenance or high-value consignments?</p>
+        </div>
+        <div class="contact-card">
+            <p><i class="fas fa-envelope"></i> support@antiqueauction.heritage</p>
+            <p><i class="fas fa-phone"></i> +1 (800) 555-TIMLESS</p>
+            <p><i class="fas fa-map-marker-alt"></i> 742 Heritage Boulevard, Paris & London</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 AntiqueAuction Platform. Free Web Development Internship Project.</p>
+            <p>Timeless, Sophisticated, Trustworthy.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('detailModal')">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div id="certModal" class="modal">
+        <div class="modal-content cert-card-modal">
+            <span class="close-btn" onclick="closeModal('certModal')">&times;</span>
+            <div id="certBody"></div>
+        </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <span class="close-btn" onclick="closeModal('authModal')">&times;</span>
+            <h2>User Authentication</h2>
+            <form onsubmit="handleAuth(event)">
+                <input type="email" id="authEmail" placeholder="Email Address" required>
+                <input type="password" id="authPassword" placeholder="Password" required>
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:1rem;">Sign In / Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
